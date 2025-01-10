@@ -44,7 +44,7 @@ let compileTimeOptions: [CSetting] = [
 	// https://sqlite.org/compile.html#use_alloca
 	.define("SQLITE_USE_ALLOCA"),
 	// https://sqlite.org/compile.html#omit_autoinit
-	.define("SQLITE_OMIT_AUTOINIT"),
+//	.define("SQLITE_OMIT_AUTOINIT"),
 	// https://sqlite.org/compile.html#strict_subtype
 	.define("SQLITE_STRICT_SUBTYPE", to: "1"),
 ]
@@ -105,7 +105,10 @@ let package = Package(
 				.define("SQLITE_CORE", to: "1"),
 			],
 			linkerSettings: [
-				.linkedLibrary("m"),
+			    // Remove .linkedLibrary("m") for Windows
+			    // Add Windows-specific libraries if needed:
+			    .linkedLibrary("legacy_stdio_definitions"),
+			    .linkedLibrary("legacy_stdio_wide_specifiers")
 			]),
 		.testTarget(
 			name: "CSQLiteTests",
